@@ -12,7 +12,9 @@ Built with **TensorFlow/Keras**, tested on the [Mendeley COVID19, Pneumonia and 
 
 ### Setup & Installation
 git clone https://github.com/skaiml1307/pneumonia_covid_detection.git
+
 cd pneumonia_covid_detection
+
 pip install -r requirements.txt
 
 
