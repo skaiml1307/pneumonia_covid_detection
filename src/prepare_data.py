@@ -8,24 +8,22 @@ DATASET_DIR = os.path.join(BASE_DIR, "COVID19_Pneumonia_Normal_Chest_Xray_PA_Dat
 CSV_PATH = os.path.join(BASE_DIR, "metadata.csv")
 OUTPUT_DIR = "data"
 
+# clean old split folders
 for subset in ["train", "val", "test"]:
     subset_path = os.path.join(OUTPUT_DIR, subset)
     if os.path.exists(subset_path):
         shutil.rmtree(subset_path)
 
-
+# loading metadata
 df = pd.read_csv(CSV_PATH)
 print("Metadata preview:")
 print(df.head())
 
-class_map = {
-    0: "normal",
-    1: "covid",
-    2: "pneumonia"
-}
+# map numeric class to string labels
+class_map = {0: "normal", 1: "covid", 2: "pneumonia"}
 df['label'] = df['class'].map(class_map)
 
-
+# spliting into train/val/test (70/15/15)
 train_df, temp_df = train_test_split(
     df, test_size=0.3, stratify=df['label'], random_state=42
 )
@@ -35,27 +33,24 @@ val_df, test_df = train_test_split(
 
 def copy_images(subset_df, subset_name):
     for _, row in subset_df.iterrows():
-        rel_path = row['directory']   # e.g. covid/COVID19(308).jpg
+        rel_path = row['directory']
         label = row['label']
         src_path = os.path.join(DATASET_DIR, rel_path)
         dest_dir = os.path.join(OUTPUT_DIR, subset_name, label)
         os.makedirs(dest_dir, exist_ok=True)
         if os.path.exists(src_path):
             shutil.copy(src_path, dest_dir)
-        else:
-            # Skip missing files silently
-            continue
 
-
+# copying files into train/val/test
 copy_images(train_df, "train")
 copy_images(val_df, "val")
 copy_images(test_df, "test")
 
 print(" Dataset organized into train/val/test folders successfully!")
 
-# verification step: count images per class in each split
+# verification step
 for subset in ["train", "val", "test"]:
-    print(f"\n📊 Counts for {subset}:")
+    print(f"\n Counts for {subset}:")
     subset_path = os.path.join(OUTPUT_DIR, subset)
     for label in class_map.values():
         label_path = os.path.join(subset_path, label)
