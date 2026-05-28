@@ -40,9 +40,9 @@ Overfitting observed, excluded from final pipeline
 
 
 ###### Key Learnings
-echo "Not all deeper architectures guarantee better accuracy (ResNet101 failed)."
-echo "EarlyStopping prevents overfitting and stabilizes results."
-echo "Proper dataset stratification ensures balanced class representation."
+"Not all deeper architectures guarantee better accuracy (ResNet101 failed)."
+"EarlyStopping prevents overfitting and stabilizes results."
+"Proper dataset stratification ensures balanced class representation."
 
 
 ###### How to Reproduce
@@ -54,4 +54,4 @@ ls results/
 
 
 #  License
-echo "This project is for educational and research purposes."
+"This project is for educational and research purposes."
