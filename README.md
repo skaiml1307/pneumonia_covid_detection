@@ -54,6 +54,3 @@ python src/resnet50.py
 
 ls results/
 
-
-#  License
-"This project is for educational and research purposes."
